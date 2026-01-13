@@ -1,13 +1,19 @@
 import Products from "./components/Products";
-
+import Counter from "./components/Counter";
+import ProductList from "./components/ProductList";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
 function App() {
   return (
-    <div>
-      <h1>React + Laravel</h1>
-      <Products/>
-    </div>
+ 
+
+    <Router>
+      <Routes>
+        <Route path="/" element={<ProductList />}></Route>
+
+      </Routes>
+    </Router>
   );
 }
 
