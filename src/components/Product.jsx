@@ -3,7 +3,7 @@ export default function Product({ product, onDelete, onIncreasePrice, loadingId 
   return(
     <div>
       <h3>{product.name}</h3>
-      <p>Price: P{product.price}</p>
+      <p>Price: P{Number(product.price).toFixed(2)}</p>
       <p>Category: {product.category === 1 ? 'Hot Coffee' : 'Iced Coffee'}</p>
       {product.description && <p>Description: {product.description}</p>}
       <div>

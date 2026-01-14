@@ -12,24 +12,31 @@ export default function ProductList() {
 
   // Fetch products from API on mount
   useEffect(() => {
-    fetch("http://localhost:8000/api/products")
-      .then(res => {
-        if (!res.ok) throw new Error("Failed to fetch products");
-        return res.json();
-      })
-      .then(data => {
-        console.log(data);
+    const getData = async () => {
+      try{
+        const res = await fetch("http://localhost:8000/api/products")
+
+        const data = await res.json();
+
         setProducts(data);
         setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
+
+      }catch(err){
+        console.log(err.message);
         setLoading(false);
-      });
+      }
+ 
+     
+    };
+    getData();
   }, []);
 
   // Increase product price
   const increasePrice = async (id) => {
+
+    const previousProducts = products;
+
+    setProducts(prev => prev.map(p => p.id === id ? {...p, price: p.price + 10} : p ))
 
     try{
 
@@ -41,34 +48,47 @@ export default function ProductList() {
       );
 
       const updatedProduct = await res.json();
-
+      console.log(updatedProduct)
       setProducts(prev => 
-        prev.map(p => p.id === updatedProduct.id ? updatedProduct : p)
+        prev.map(p => p.id === id ? updatedProduct.data : p)
       );
+      setSuccess(updatedProduct.success);
+
+      setTimeout(() => {
+        setSuccess(null);
+      }, 1000)
     }catch(err)
     {
       console.log(err.message)
+      setProducts(previousProducts);
     }finally{
       setLoadingId(null);
     }
   };
 
-  // Delete product locally
-  const deleteProduct = (id) => {
-    fetch(`http://localhost:8000/api/products/${id}`, {
-      method: 'DELETE',
-      headers: {'Content-type': 'application/json'},
-    })
-    .then(res => res.json())
-    .then(data => {
-      setProducts(products.filter(p => p.id !== id));
+  const deleteProduct = async (id) => {
+    
+    try{
+       const res = await fetch(`http://localhost:8000/api/products/${id}`,
+      {method: 'DELETE'}
+    );
 
-      setSuccess(data.success);
-      setTimeout(() => {
-        setSuccess(null);
-      },1500)
-    })
-    .catch(err => console.log(err.message));
+      const data = await res.json();
+
+    if(!res.ok) throw new Error('Delete failed');
+
+
+    setProducts(prev => prev.filter(p => p.id !== id));
+    setSuccess(data.success);
+
+    setTimeout(() => {
+      setSuccess(null)
+    }, 1000)
+    }catch(err)
+    {
+      console.log(err.message);
+    }
+   
   };
 
 
