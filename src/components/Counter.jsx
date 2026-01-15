@@ -1,33 +1,12 @@
 import { useEffect, useState } from "react";
 
-function Counter () {
-  const [count, setCount] = useState(0)
-
-  const incrementTwice = () => {
-    console.log("Before first setCount:", count)
-    setCount(prev => prev + 1)
-    console.log("After first setCount:")
-    setCount(prev => prev + 1)
-    console.log("After second setCount:", count)
-   
-  }
-  useEffect(() => {
-    console.log("useEffect: Count changed to", count)
-  }, [count])
-
-  const decrement = () => {
-    setCount(count - 1)
-  }
-
-  return (
-    <>
-      <h2>Counter App</h2>
-
-      <p>Count: {count}</p>
-      <button onClick={incrementTwice}>+2</button>
-      <button onClick={decrement}>-1</button>
-    </>
-  )
+export default function Counter({ counter, onIncrease, onDelete })
+{
+  return(
+    <div>
+      <p>{counter.value}</p>
+      <button disabled={counter.value >= 10}  onClick={() => onIncrease(counter.id)} className={`px-2 py-1 rounded ${counter.value >= 10 ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 text-white hover:bg-green-600"}`}>+1</button>
+      <button onClick={() => onDelete(counter.id)}>Delete</button>
+    </div>
+  );
 }
-
-export default Counter

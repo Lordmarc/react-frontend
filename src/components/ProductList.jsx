@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Product from "./Product";
+import ProductForm from "./ProductForm";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -17,8 +19,9 @@ export default function ProductList() {
         const res = await fetch("http://localhost:8000/api/products")
 
         const data = await res.json();
-
-        setProducts(data);
+      
+        setProducts(data.products);
+        setCategories(data.categories);
         setLoading(false);
 
       }catch(err){
@@ -30,14 +33,13 @@ export default function ProductList() {
     };
     getData();
   }, []);
-
   // Increase product price
   const increasePrice = async (id) => {
 
     const previousProducts = products;
 
     setProducts(prev => prev.map(p => p.id === id ? {...p, price: p.price + 10} : p ))
-
+``
     try{
 
       setLoadingId(id);
@@ -91,6 +93,10 @@ export default function ProductList() {
    
   };
 
+  const addNewProduct = (newProduct) => {
+    setProducts(prev => [...prev, newProduct]);
+  }
+
 
 
   if (loading) return <p>Loading...</p>;
@@ -99,8 +105,8 @@ export default function ProductList() {
   return (
     <>
     {success && (<p style={{color: 'green'}}>{success}</p>)}
-
-      <h2>Product List</h2>
+      <ProductForm categories={categories} onAdd={addNewProduct}/>
+      <h2 className="text-2xl">Product List</h2>
      
       {products.map(p => (
         <Product
