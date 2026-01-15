@@ -23,7 +23,7 @@ export default function ProductList() {
         setProducts(data.products);
         setCategories(data.categories);
         setLoading(false);
-
+        
       }catch(err){
         console.log(err.message);
         setLoading(false);
