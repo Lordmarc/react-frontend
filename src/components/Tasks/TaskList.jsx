@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import Task from "./Task";
 import TaskForm from "./TaskForm";
+import TaskTitle from "./TaskTitle";
 
 export default function TaskList()
 {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(0);
   useEffect(() => {
     const getTasks = async () => {
+      
       try{
          const res = await fetch('http://localhost:8000/api/tasks');
 
@@ -30,17 +33,28 @@ export default function TaskList()
 
   
   const toggleDone = (id) => {
-    setTasks(prev => prev.map(t => t.id === id ? {...t, done: !t.done} : t));
+    setTasks(prev => prev.map(t => t.id === id ? {...t, status: !t.status} : t));
   }
   console.log(tasks)
-  return (
-    <div>
-      <h2>TaskList</h2>
-      <TaskForm onAdd={addTask}/>
-      {tasks.map(t => (
 
-        <Task key={t.id} task={t} />
-      ))}
+  if(loading) return <p>Loading....</p>
+  return (
+    <div className="rounded bg-white w-full max-w-md">
+      <TaskTitle/>
+
+      <TaskForm onAdd={addTask}/>
+      <div className="flex w-full justify-between my-4"> 
+        <p>Your Tasks</p>
+        <span>active</span>
+      </div>
+      <div>
+   
+        {tasks.map(t => (
+
+          <Task key={t.id} task={t} onToggle={toggleDone}/>
+        ))}
+      </div>
+  
     </div>
 
 
