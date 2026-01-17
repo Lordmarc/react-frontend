@@ -3,7 +3,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 export default function TaskTitle()
 {
   return(
-    <div className="flex flex-col justify-center items-center gap-2 mb-16">
+    <div className="flex flex-col justify-center items-center gap-2 mb-8">
       <div className="rounded-md p-2 inline-flex place-content-center bg-slate-200 text-4xl">
       <FaRegCheckCircle className="text-[#215E61]"/>
       </div>

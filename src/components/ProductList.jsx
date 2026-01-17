@@ -96,6 +96,7 @@ export default function ProductList() {
   const addNewProduct = (newProduct) => {
     setProducts(prev => [...prev, newProduct]);
   }
+  
 
 
 

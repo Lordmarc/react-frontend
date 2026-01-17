@@ -8,13 +8,13 @@ export default function TaskForm({ onAdd }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!task.name.trim()) return;
-    const newTask = {
-      name: task.name,
-      description: task.description,
-    };
-    onAdd(newTask);
-    setTask({ name: "", description: "" });
+  
+      onAdd(task);
+      setTask({
+        name: "",
+        description: ""
+      })
+  
   };
 
   const handleChange = (e) => {
@@ -25,7 +25,7 @@ export default function TaskForm({ onAdd }) {
       onSubmit={handleSubmit}
       className="p-4 rounded-md border border-gray-300 flex flex-col gap-4 w-full"
     >
-      <div class="flex flex-col ">
+      <div className="flex flex-col ">
         <label htmlFor="name" className="text-sm font-semibold">
           TASK TITLE
         </label>
@@ -39,7 +39,7 @@ export default function TaskForm({ onAdd }) {
         />
       </div>
 
-       <div class="flex flex-col">
+       <div className="flex flex-col">
         <label htmlFor="description" className="text-sm font-semibold">
           DESCRIPTION
         </label>
@@ -52,7 +52,7 @@ export default function TaskForm({ onAdd }) {
           className="px-3 py-2 rounded border border-gray-300h h-28"
         />
       </div>
-      <button className="w-full text-center p-2 bg-[#215E61] rounded-md inline-block place-content-center text-white font-semibold"><i class="fa-solid fa-plus"></i> Add Task</button>
+      <button className="w-full text-center p-2 bg-[#215E61] rounded-md inline-block place-content-center text-white font-semibold"><i className="fa-solid fa-plus"></i> Add Task</button>
     </form>
   );
 }
