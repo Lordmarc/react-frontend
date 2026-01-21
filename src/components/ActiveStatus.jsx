@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import Status from "./Status";
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 export default function ActiveStatus() {
-  const [status, setStatus] = useState(false);
+  const { isOnline, toggle} = useOnlineStatus();
 
-  useEffect(() => {
-    console.log(`User is now ${status ? 'online' : 'offline'}`);
-  },[status]);
 
   return(
     <div>
-      <Status isOnline={status}/>
+      <button onClick={toggle}>{isOnline ? 'OFFLINE' : 'ONLINE'}</button>
+      <Status isOnline={isOnline}/>
     </div>
   );
 }

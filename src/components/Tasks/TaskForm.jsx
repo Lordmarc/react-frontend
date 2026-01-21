@@ -14,7 +14,7 @@ export default function TaskForm({ onAdd }) {
         description: description.value
       })
       
-      name.reset();
+      name.reset(); 
       description.reset();
   };
 

@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.user-tab-btn {
+  @apply py-4 px-6 text-[#84602d] text-[20px]
+}
